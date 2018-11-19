@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
+import * as actionCreators from "../../store/actions";
+
 // NativeBase Components
 import {
   Text,
@@ -14,6 +16,9 @@ import {
 } from "native-base";
 
 class CoffeeCart extends Component {
+  checkout() {
+    this.props.checkout(), alert("Thank you! Enjoy your drink");
+  }
   renderItem(item, index) {
     return (
       <ListItem key={index}>
@@ -27,7 +32,7 @@ class CoffeeCart extends Component {
           <Text style={{ color: "white" }}>{item.quantity}</Text>
         </Body>
         <Right>
-          <Button transparent>
+          <Button transparent onPress={() => this.props.removeItem(item)}>
             <Icon name="trash" style={{ color: "white", fontSize: 21 }} />
           </Button>
         </Right>
@@ -40,7 +45,7 @@ class CoffeeCart extends Component {
     return (
       <List>
         {list.map((item, index) => this.renderItem(item, index))}
-        <Button full danger>
+        <Button full danger onPress={() => this.checkout()}>
           <Text>Checkout</Text>
         </Button>
       </List>
@@ -52,7 +57,14 @@ const mapStateToProps = state => ({
   cart: state.cart
 });
 
+const mapActionToProps = dispatch => {
+  return {
+    removeItem: item => dispatch(actionCreators.removeItemFromCart(item)),
+    checkout: () => dispatch(actionCreators.checkoutCart())
+  };
+};
+
 export default connect(
   mapStateToProps,
-  {}
+  mapActionToProps
 )(CoffeeCart);
