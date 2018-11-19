@@ -76,6 +76,7 @@ class CoffeeDetail extends Component {
   componentDidMount() {
     this.props.navigation.setParams({ length: this.props.cart.length });
   }
+
   componentDidUpdate() {
     if (this.props.navigation.getParam("length") !== this.props.cart.length) {
       this.props.navigation.setParams({ length: this.props.cart.length });

@@ -51,6 +51,13 @@ class CoffeeList extends Component {
     this.props.navigation.setParams({ length: this.props.cart.length });
   }
 
+  componentDidUpdate() {
+    console.log(this.props.navigation.getParam("length"));
+    if (this.props.navigation.getParam("length") !== this.props.cart.length) {
+      this.props.navigation.setParams({ length: this.props.cart.length });
+    }
+  }
+
   renderItem(shop) {
     return (
       <TouchableOpacity key={shop.id} onPress={() => this.handlePress(shop)}>
